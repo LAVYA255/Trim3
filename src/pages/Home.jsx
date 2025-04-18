@@ -30,6 +30,11 @@ const Home = () => {
     setSearchInput(e.target.value);
   };
 
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    searchGames(searchInput);
+  };
+
   if (loading && games.length === 0) {
     return (
       <div className="flex justify-center items-center min-h-[50vh]">
@@ -57,16 +62,24 @@ const Home = () => {
     <div>
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-4">Popular Games</h1>
-        <div className="relative max-w-md">
-          <input
-            type="text"
-            value={searchInput}
-            onChange={handleSearchChange}
-            placeholder="Search games..."
-            className="w-full p-3 pl-10 rounded-lg bg-secondary border border-gray-700 focus:border-accent focus:outline-none"
-          />
-          <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-        </div>
+        <form onSubmit={handleSearchSubmit} className="max-w-md">
+          <div className="relative flex">
+            <input
+              type="text"
+              value={searchInput}
+              onChange={handleSearchChange}
+              placeholder="Search games..."
+              className="w-full p-3 pl-10 rounded-l-lg bg-secondary border border-gray-700 focus:border-accent focus:outline-none"
+            />
+            <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <button
+              type="submit"
+              className="px-4 py-3 bg-accent text-white rounded-r-lg hover:bg-accent/90 transition-colors"
+            >
+              Search
+            </button>
+          </div>
+        </form>
       </div>
 
       {games.length === 0 ? (
