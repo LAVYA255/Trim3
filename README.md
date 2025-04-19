@@ -2,6 +2,8 @@
 
 A modern React application for managing your video game collection, built with React, React Router, Context API, and Tailwind CSS.
 
+## LINK:https://gamerv.netlify.app/
+
 ## Features
 
 - Browse popular games from the RAWG Video Games API
@@ -11,16 +13,21 @@ A modern React application for managing your video game collection, built with R
 - Responsive design for both mobile and desktop
 - Modern UI with Tailwind CSS
 
-## Tech Stack
 
-- React (Functional Components + Hooks)
-- React Router for navigation
-- Context API for state management
-- Tailwind CSS for styling
-- RAWG Video Games API for game data
-- Axios for API requests
+## 🛠 Tech Stack
 
-## Getting Started
+- **React.js** (Functional Components + Hooks)
+- **React Router** for routing
+- **React Context API** for global state
+- **Tailwind CSS** for styling
+- **RAWG Video Games** API for game data
+- **Axios** for API requests
+- **JSONPlaceholder** for mock API
+- **Git & GitHub** for version control
+- **Netlify** for deployment
+
+## Images!
+![Home Page](./screenshots/HomePage.png)
 
 ### Prerequisites
 
@@ -57,7 +64,12 @@ npm run dev
 
 ```
 gamevault/
-├── src/
+├── src
+|   |── screenshots/
+|       ├── GameAddPage.png
+|       ├── GameDetailsPage.png
+|       ├── HomePage.png
+|       └── LibraryPage.png
 │   ├── components/
 │   │   ├── GameCard.jsx
 │   │   └── Navbar.jsx
@@ -91,9 +103,6 @@ gamevault/
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
