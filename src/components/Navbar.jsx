@@ -11,7 +11,7 @@ const Navbar = () => {
           <Link to="/" className="text-2xl font-bold text-white flex items-center group">
             <FaGamepad className="mr-2 text-accent group-hover:text-accent-light transition-colors duration-300" />
             <span className="bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent">
-              GameVault
+              GamerVault
             </span>
           </Link>
           
