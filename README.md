@@ -32,12 +32,6 @@ A modern React application for managing your video game collection, built with R
 ![Details Page](./screenshots/GameDetailsPage.png)
 ![Add Game Page](./screenshots/AddGamePage.png)
 
-### Prerequisites
-
-- Node.js (v14 or higher)
-- npm or yarn
-- RAWG API key
-
 ### Installation
 
 1. Clone the repository:
