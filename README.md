@@ -30,7 +30,7 @@ A modern React application for managing your video game collection, built with R
 ![Home Page](./screenshots/HomePage.png)
 ![Library Page](./screenshots/LibraryPage.png)
 ![Details Page](./screenshots/GameDetailsPage.png)
-![Add Game Page](./screenshots/GameAddDetailsPage.png)
+![Add Game Page](./screenshots/AddGamePage.png)
 
 ### Prerequisites
 
