@@ -1,10 +1,24 @@
 import { useEffect, useState } from 'react';
 import { useGameContext } from '../context/GameContext';
 import GameCard from '../components/GameCard';
-import { FaSearch } from 'react-icons/fa';
+import { FaSearch, FaWindows, FaPlaystation, FaXbox, FaApple, FaAndroid, FaLinux } from 'react-icons/fa';
+import { SiNintendo, SiIos } from 'react-icons/si';
 
 const Home = () => {
-  const { games, loading, error, genres, selectedGenre, searchGames, selectGenre, loadMore } = useGameContext();
+  const { 
+    games, 
+    loading, 
+    error, 
+    genres, 
+    platforms,
+    selectedGenre, 
+    selectedPlatform,
+    searchGames, 
+    selectGenre,
+    selectPlatform,
+    loadMore 
+  } = useGameContext();
+
   const [searchInput, setSearchInput] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
 
@@ -27,6 +41,29 @@ const Home = () => {
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     searchGames(searchInput);
+  };
+
+  const getPlatformIcon = (platform) => {
+    switch (platform) {
+      case 'pc':
+        return <FaWindows className="text-blue-400" />;
+      case 'playstation':
+        return <FaPlaystation className="text-blue-500" />;
+      case 'xbox':
+        return <FaXbox className="text-green-500" />;
+      case 'nintendo':
+        return <SiNintendo className="text-red-500" />;
+      case 'mac':
+        return <FaApple className="text-gray-400" />;
+      case 'linux':
+        return <FaLinux className="text-yellow-400" />;
+      case 'ios':
+        return <SiIos className="text-gray-300" />;
+      case 'android':
+        return <FaAndroid className="text-green-400" />;
+      default:
+        return null;
+    }
   };
 
   if (loading && games.length === 0) {
@@ -74,22 +111,48 @@ const Home = () => {
           </form>
 
           {/* Genre Filter */}
-          <div className="flex flex-wrap gap-2">
-            <button
-              onClick={() => selectGenre(null)}
-              className={`badge ${!selectedGenre ? 'badge-primary' : 'badge-secondary'}`}
-            >
-              All Games
-            </button>
-            {genres.map((genre) => (
+          <div className="mb-4">
+            <h3 className="text-lg font-semibold text-white mb-2">Genres</h3>
+            <div className="flex flex-wrap gap-2">
               <button
-                key={genre.id}
-                onClick={() => selectGenre(genre.id)}
-                className={`badge ${selectedGenre === genre.id ? 'badge-primary' : 'badge-secondary'}`}
+                onClick={() => selectGenre(null)}
+                className={`badge ${!selectedGenre ? 'badge-primary' : 'badge-secondary'}`}
               >
-                {genre.name}
+                All Genres
               </button>
-            ))}
+              {genres.map((genre) => (
+                <button
+                  key={genre.id}
+                  onClick={() => selectGenre(genre.id)}
+                  className={`badge ${selectedGenre === genre.id ? 'badge-primary' : 'badge-secondary'}`}
+                >
+                  {genre.name}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Platform Filter */}
+          <div>
+            <h3 className="text-lg font-semibold text-white mb-2">Platforms</h3>
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => selectPlatform(null)}
+                className={`badge ${!selectedPlatform ? 'badge-primary' : 'badge-secondary'}`}
+              >
+                All Platforms
+              </button>
+              {platforms.map((platform) => (
+                <button
+                  key={platform.id}
+                  onClick={() => selectPlatform(platform.id)}
+                  className={`badge ${selectedPlatform === platform.id ? 'badge-primary' : 'badge-secondary'} flex items-center gap-1`}
+                >
+                  {getPlatformIcon(platform.slug)}
+                  <span>{platform.name}</span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 

@@ -22,7 +22,9 @@ export const GameProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [genres, setGenres] = useState([]);
+  const [platforms, setPlatforms] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState(null);
+  const [selectedPlatform, setSelectedPlatform] = useState(null);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -46,6 +48,15 @@ export const GameProvider = ({ children }) => {
     }
   }, [API_KEY]);
 
+  const fetchPlatforms = useCallback(async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/platforms?key=${API_KEY}`);
+      setPlatforms(response.data.results);
+    } catch (err) {
+      console.error("Error fetching platforms:", err);
+    }
+  }, [API_KEY]);
+
   const fetchGames = useCallback(async (pageNum = 1) => {
     try {
       setLoading(true);
@@ -53,6 +64,10 @@ export const GameProvider = ({ children }) => {
       
       if (selectedGenre) {
         url += `&genres=${selectedGenre}`;
+      }
+      
+      if (selectedPlatform) {
+        url += `&platforms=${selectedPlatform}`;
       }
       
       if (searchQuery) {
@@ -75,17 +90,25 @@ export const GameProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  }, [API_KEY, selectedGenre, searchQuery]);
+  }, [API_KEY, selectedGenre, selectedPlatform, searchQuery]);
 
   const searchGames = useCallback((query) => {
     setSearchQuery(query);
     setPage(1);
     setSelectedGenre(null);
+    setSelectedPlatform(null);
     fetchGames(1);
   }, [fetchGames]);
 
   const selectGenre = useCallback((genreId) => {
     setSelectedGenre(genreId);
+    setPage(1);
+    setSearchQuery("");
+    fetchGames(1);
+  }, [fetchGames]);
+
+  const selectPlatform = useCallback((platformId) => {
+    setSelectedPlatform(platformId);
     setPage(1);
     setSearchQuery("");
     fetchGames(1);
@@ -99,15 +122,15 @@ export const GameProvider = ({ children }) => {
     }
   }, [page, loading, hasMore, fetchGames]);
 
-  const getGameDetails = async (id) => {
+  const getGameDetails = useCallback(async (id) => {
     try {
       const response = await axios.get(`${BASE_URL}/games/${id}?key=${API_KEY}`);
       return response.data;
     } catch (err) {
-      console.error("Error fetching game details:", err);
+      console.error('Error fetching game details:', err);
       throw err;
     }
-  };
+  }, [API_KEY]);
 
   const addToLibrary = (game, category) => {
     setLibrary((prev) => ({
@@ -126,7 +149,8 @@ export const GameProvider = ({ children }) => {
   useEffect(() => {
     console.log("GameContext mounted, fetching initial games..."); // Debug log
     fetchGenres();
-  }, [fetchGenres]);
+    fetchPlatforms();
+  }, [fetchGenres, fetchPlatforms]);
 
   useEffect(() => {
     fetchGames(page);
@@ -138,10 +162,13 @@ export const GameProvider = ({ children }) => {
     error,
     library,
     genres,
+    platforms,
     selectedGenre,
+    selectedPlatform,
     hasMore,
     searchGames,
     selectGenre,
+    selectPlatform,
     loadMore,
     getGameDetails,
     addToLibrary,
